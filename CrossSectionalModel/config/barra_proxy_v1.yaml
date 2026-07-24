@@ -1,0 +1,16 @@
+project:
+  name: barra_proxy
+  version: v1
+
+data:
+  industry_path: /home/cross_common_data/industry/industry_010301.csv
+  daily_market_dir: /home/cross_common_data/daily_market
+  output_path: CrossSectionalModel/data/barra_proxy/barra_proxy_20241022_20250114.csv
+
+date:
+  start_date: 20241022
+  end_date: 20250114
+
+columns:
+  date_col: date
+  symbol_col: securityid

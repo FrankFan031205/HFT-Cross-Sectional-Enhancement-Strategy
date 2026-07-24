@@ -1,0 +1,43 @@
+project:
+  name: factor_model_mlp2_h60
+  version: v1
+  seed: 42
+
+data:
+  processed_data_path: data/processed/factor_features_202410_100_processed.csv
+  date_col: date
+  datetime_col: datetime
+  symbol_col: securityid
+  feature_cols_path: data/raw/feature_cols_202410_100.yaml
+  label_col: label_60
+
+  train_start: 20241022
+  train_end: 20241028
+  valid_start: 20241029
+  valid_end: 20241029
+  test_start: 20241030
+  test_end: 20241031
+
+model:
+  type: mlp
+  params:
+    hidden_dims: [128, 64]
+    dropout: 0.10
+    batch_norm: true
+
+train:
+  batch_size: 32768
+  epochs: 8
+  patience: 2
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  label_scale: 10000.0
+  device: cuda
+  model_path: models/mlp2_h60_202410_100.pt
+
+prediction:
+  output_col: hidden_factor_mlp2_h60
+  output_path: outputs/hidden_factor_mlp2_h60_202410_100.csv
+
+output:
+  metrics_path: outputs/model_metrics_mlp2_h60_202410_100.csv

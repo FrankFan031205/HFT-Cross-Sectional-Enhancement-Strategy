@@ -1,0 +1,45 @@
+project:
+  name: feature_transformer_h120_oos_20241125_20250114
+  version: v1_strict_oos
+paths:
+  project_root: /mnt/data1/fwz/HFT_010-dev_fwz
+  output_root: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerPipeline/feature_transformer_h120_oos_20241125_20250114
+dates:
+  train_start_date: 20241022
+  train_end_date: 20241122
+  test_start_date: 20241125
+  test_end_date: 20250114
+universe:
+  n_symbols: 1000
+model:
+  model_name: cs_dl_feature_transformer_h120
+  model_type: feature_transformer
+  horizon: 120
+  frozen_model_path: /mnt/data1/fwz/HFT_010-dev_fwz/FactorModel/models/cs_dl_v2_feature_transformer_h120_20241022_20241122_742.pt
+  train_hidden_factor_path: /mnt/data1/fwz/HFT_010-dev_fwz/FactorModel/outputs/hidden_factor_cs_dl_feature_transformer_h120_20241022_20241122_csi1000.csv
+  oos_hidden_factor_path: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerPipeline/feature_transformer_h120_oos_20241125_20250114/hidden_factor/hidden_factor_cs_dl_feature_transformer_h120_20241125_20250114_742_oos.csv
+data:
+  market_data_dir: /mnt/data1/fwz/HFT_010-dev_fwz/PricingModel/data/market_return_20241022_20250114_csi1000_by_date
+  market_file_pattern: market_return_{date}_csi1000.csv
+pricing:
+  use_pricing: true
+  label_col: label_120
+  train_priced_dataset_path: /mnt/data1/fwz/HFT_010-dev_fwz/PricingModel/output/pricing_30d_ret120_selected_12_742factors_rank_guarded/pricing/cs_dl_feature_transformer_h120/priced_dataset.csv
+  oos_priced_dataset_path: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerPipeline/feature_transformer_h120_oos_20241125_20250114/pricing/priced_dataset_cs_dl_feature_transformer_h120_20241125_20250114_742_oos.csv
+  calibration_mode: frozen_train_ols
+optimizer:
+  output_path: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerPipeline/feature_transformer_h120_oos_20241125_20250114/target_positions/taker_target_positions_feature_transformer_h120_742_pricing_oos_20241125_20250114.csv
+  optimizer_mode: local_global
+  gross_limit: 0.6
+  min_trade_notional: 50000.0
+  entry_max_spread_bps: 10.0
+  max_single_name_weight: 0.01
+  use_pricing_edges: true
+taker_backtest:
+  run_backtest: true
+  config_path: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerPipeline/feature_transformer_h120_oos_20241125_20250114/taker_config/taker_model_feature_transformer_h120_oos.yaml
+  output_dir: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerPipeline/feature_transformer_h120_oos_20241125_20250114/taker_backtest
+  capital: 200000000
+  taker_fee_bps: 0.5
+  slippage_bps: 0.0
+  execution_lag_minutes: 1

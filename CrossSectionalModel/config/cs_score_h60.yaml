@@ -1,0 +1,36 @@
+project:
+  name: cs_score_h60
+  version: v1
+
+data:
+  cs_dataset_path: CrossSectionalModel/data/processed/cs_dataset_h60_202410_100.csv
+  stability_path: CrossSectionalModel/outputs/stability_h60_202410_100/factor_stability_summary.csv
+  output_path: CrossSectionalModel/outputs/cs_score_h60_202410_100.csv
+  weight_output_path: CrossSectionalModel/outputs/cs_score_weights_h60_202410_100.csv
+
+columns:
+  datetime_col: datetime
+  symbol_col: securityid
+  label_col: label_60
+  label_rank_col: label_cs_60_rank
+  label_excess_col: label_cs_60_demean
+
+factors:
+  mode: top_n
+  top_n: 10
+  sort_by:
+    - daily_mean_rankic_avg
+    - daily_rankic_ir
+    - daily_top20_excess_avg
+  min_positive_day_ratio: 0.8
+  min_daily_mean_rankic: 0.0
+  min_daily_top20_excess: 0.0
+
+score:
+  weighting_method: rankic
+  normalize_weights: true
+  clip_factor_z: 10.0
+  clip_score_z: 10.0
+
+output:
+  keep_factor_values: false

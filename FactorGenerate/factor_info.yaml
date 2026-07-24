@@ -1,0 +1,203 @@
+feature_list:
+    - timestamp
+    - midprice                                        # pre-handel get this value
+    - spread                                          # pre-handel get this value
+    - limit_up_price                                  # 涨停价
+    - limit_down_price                                # 跌停价
+    - turnoverRate                                    # 前一个交易日换手
+    - negMarketValue                                  # 前一个交易日流动市值
+    - marketValue                                     # 前一个交易日市值
+    - PE                                              # PE
+    - PE1                                             # PE1
+    - PB                                              # PB
+    - VOL5                                            # 5日换手
+    - VOL10                                           # 10日换手
+    - VOL20                                           # 20日换手
+    - ATR6
+    - ATR14
+    - BIAS5
+    - BIAS10
+    - bidprice1
+    - bidprice2
+    - bidprice3
+    - bidprice4
+    - bidprice5
+    - bidprice6
+    - bidprice7
+    - bidprice8
+    - bidprice9
+    - bidprice10
+    - bidvolume1
+    - bidvolume2
+    - bidvolume3
+    - bidvolume4
+    - bidvolume5
+    - bidvolume6
+    - bidvolume7
+    - bidvolume8
+    - bidvolume9
+    - bidvolume10
+    - askprice1
+    - askprice2
+    - askprice3
+    - askprice4
+    - askprice5
+    - askprice6
+    - askprice7
+    - askprice8
+    - askprice9
+    - askprice10
+    - askvolume1
+    - askvolume2
+    - askvolume3
+    - askvolume4
+    - askvolume5
+    - askvolume6
+    - askvolume7
+    - askvolume8
+    - askvolume9
+    - askvolume10
+
+
+additional_feature_list:
+    - volume                                          # 快照成交量
+    - activate_buy_volume                             # 快照内主动买入的成交量
+    - activate_buy_amount                             # 快照内主动买入的金额
+    - activate_sell_volume                            # 快照内主动卖出的成交量
+    - activate_sell_amount                            # 快照内主动卖出的金额
+    - trade_count                                     # 快照内成交次数
+    - activate_buy_trade_count                        # 快照内主动买入的成交次数
+    - activate_sell_trade_count                       # 快照内主动卖出的成交次数
+    - large_buy_trade_volume                          # 快照内大额买入的成交量
+    - large_sell_trade_volume                         # 快照内大额卖出的成交量
+    - activate_buy_order_volume                       # 快照内主动买入的委托量
+    - activate_sell_order_volume                      # 快照内主动卖出的委托量
+    - activate_buy_order_count                        # 快照内主动买入的委托次数
+    - activate_sell_order_count                       # 快照内主动卖出的委托次数
+    - aggressive_buy_order_volume                     # 快照内 aggressive buy 的委托量
+    - aggressive_sell_order_volume                    # 快照内 aggressive sell 的委托量
+    - buy_order_distance_amount                       # 快照内 buy order 的距离金额
+    - sell_order_distance_amount                      # 快照内 sell order 的距离金额
+    - cancel_buy_volume                               # 快照内买侧撤单量        
+    - cancel_sell_volume                              # 快照内卖侧撤单量
+    - near_buy_cancel_volume                          # 快照内近端买侧撤单量
+    - near_sell_cancel_volume                         # 快照内近端卖侧撤单量
+
+#  因子列表
+factor_list:
+    # 个股收益率系列
+    - [fwz1_ret_1,[]]
+    - [fwz1_ret_3,[]]
+    - [fwz1_ret_5,[]]
+    - [fwz1_ret_10,[]]
+    - [fwz1_ret_30,[]]
+    - [fwz1_ret_check,[fwz1_ret_1]]
+    - [fwz1_ret_45,[fwz1_ret_1]]
+
+    # Snapshot 盘口结构因子
+    - [fwz2_obi_1,[]]
+    - [fwz2_obi_3,[]]
+    - [fwz2_obi_5,[]]
+    - [fwz2_obi_10,[]]
+    - [fwz2_weighted_obi_5,[]]
+    - [fwz2_microprice_deviation,[]]
+    - [fwz2_depth_imbalance_5,[]]
+    - [fwz2_depth_imbalance_10,[]]
+    - [fwz2_total_depth_5,[]]
+    - [fwz2_total_depth_10,[]]
+    - [fwz2_book_slope_imbalance_5,[]]
+    - [fwz2_bid_concentration_5,[]]
+    - [fwz2_ask_concentration_5,[]]
+    - [fwz2_relative_spread,[]]
+    - [fwz2_volatility_20,[]]
+    - [fwz2_volatility_60,[]]
+
+    # Trade 成交因子
+    - [fwz2_active_buy_ratio_10,[]]
+    - [fwz2_trade_imbalance_5,[]]
+    - [fwz2_trade_imbalance_10,[]]
+    - [fwz2_trade_imbalance_20,[]]
+    - [fwz2_trade_imbalance_30,[]]
+    - [fwz2_amount_imbalance_10,[]]
+    - [fwz2_vwap_deviation_10,[]]
+    - [fwz2_trade_count_imbalance_10,[]]
+    - [fwz2_trade_intensity_10,[]]
+    - [fwz2_large_trade_imbalance_10,[]]
+
+    # Order 委托因子
+    - [fwz2_order_imbalance_5,[]]
+    - [fwz2_order_imbalance_10,[]]
+    - [fwz2_order_imbalance_20,[]]
+    - [fwz2_order_imbalance_30,[]]
+    - [fwz2_order_count_imbalance_10,[]]
+    - [fwz2_aggressive_order_imbalance_10,[]]
+    - [fwz2_order_distance_imbalance_10,[]]
+
+    # Cancel 撤单因子
+    - [fwz2_cancel_pressure_10,[]]
+    - [fwz2_cancel_pressure_20,[]]
+    - [fwz2_near_cancel_pressure_10,[]]
+    - [fwz2_buy_cancel_ratio_10,[]]
+    - [fwz2_sell_cancel_ratio_10,[]]
+    - [fwz2_cancel_ratio_imbalance_10,[]]
+    - [fwz2_fake_liquidity_imbalance,[]]
+
+    # Combined 组合因子
+    - [fwz2_trade_order_linear_10,[]]
+    - [fwz2_trade_obi_linear_10,[]]
+    - [fwz2_order_obi_linear_10,[]]
+    - [fwz2_trade_order_obi_linear_10,[]]
+    - [fwz2_trade_cancel_linear_10,[]]
+    - [fwz2_obi_cancel_adjusted_10,[]]
+    - [fwz2_liquidity_adjusted_trade_order_10,[]]
+    - [fwz2_aggressive_ratio_imbalance_10,[]]
+    - [fwz2_fill_efficiency_imbalance_10,[]]
+    - [fwz2_large_trade_ratio_imbalance_10,[]]
+
+    # 截面操作因子
+    - [cf_fwz1_ret_1_mean,[fwz1_ret_1]]
+    - [cf_fwz1_ret_30_mean,[fwz1_ret_30]]
+    - [cf_fwz1_ret_check_mean,[fwz1_ret_check]]
+
+    # WEEK1
+    - [fwz_f1_spread_depth_stress,[]]
+    - [fwz_f2_top_queue_concentration_imb,[]]
+    - [fwz_f3_outer_depth_imb,[]]
+    - [fwz_f4_near_outer_depth_skew,[]]
+    - [fwz_f5_book_convexity_imb,[]]
+    - [fwz_f6_value_weighted_depth_imb,[]]
+    - [fwz_f7_close_liquidity_imb,[]]
+    - [fwz_f8_outer_price_slope_asym,[]]
+    - [fwz_f9_microprice_concentration_adj,[]]
+    - [fwz_f10_queue_imb_spread_gate,[]]
+    - [fwz_f11_depth_imb_vol_gate,[]]
+    - [fwz_f12_bias5_spread_reversal,[]]
+    - [fwz_f13_bias_term_momentum,[]]
+    - [fwz_f14_vol_term_structure,[]]
+    - [fwz_f15_atr_term_structure,[]]
+    - [fwz_f16_turnover_size_pressure,[]]
+    - [fwz_f17_turnover_bias_interaction,[]]
+    - [fwz_f18_limit_mid_location,[]]
+    - [fwz_f19_limit_boundary_stress,[]]
+    - [fwz_f20_book_limit_interaction,[]]
+    # WEEK2
+    - [fwz_f21_depth_weighted_price_pressure,[]]
+    - [fwz_f22_top_depth_decay_imb,[]]
+    - [fwz_f23_far_depth_absorption_imb,[]]
+    - [fwz_f24_bid_ask_depth_entropy_gap,[]]
+    - [fwz_f25_orderbook_liquidity_hole,[]]
+    - [fwz_f26_spread_depth_resilience,[]]
+    - [fwz_f27_midprice_pressure_adjusted,[]]
+    - [fwz_f28_microprice_spread_interaction,[]]
+    - [fwz_f29_queue_pressure_acceleration,[]]
+    - [fwz_f30_depth_imbalance_persistence,[]]
+    - [fwz_f31_trade_order_pressure_gap,[]]
+    - [fwz_f32_trade_cancel_pressure_gap,[]]
+    - [fwz_f33_order_cancel_asymmetry,[]]
+    - [fwz_f34_active_trade_intensity_pressure,[]]
+    - [fwz_f35_large_trade_depth_pressure,[]]
+    - [fwz_f36_aggressive_order_depth_pressure,[]]
+    - [fwz_f37_cancel_near_far_pressure,[]]
+    - [fwz_f38_buy_cancel_risk_gate,[]]
+    - [fwz_f39_sell_cancel_risk_gate,[]]
+    - [fwz_f40_flow_book_pressure_interaction,[]]

@@ -1,0 +1,183 @@
+project:
+  name: alpha_driven_market_maker
+  version: v2_calibrated_alpha
+  seed: 42
+
+data:
+  market_data_path: /home/fwz/projects/HFT_010-dev_fwz/PricingModel/data/market_return_202410_100.csv
+  prediction_path: /home/fwz/projects/HFT_010-dev_fwz/FactorModel/outputs/hidden_factor_mlp60_h60_202410_100.csv
+  output_dir: /home/fwz/projects/HFT_010-dev_fwz/MarketMakingModel/outputs/quote_decisions
+  output_file: quote_decisions_mlp60_h60_202410_100_v2.csv
+
+columns:
+  datetime_col: datetime
+  symbol_col: securityid
+  bid_col: bid1
+  ask_col: ask1
+  mid_col: mid_price
+  spread_col: spread
+  bid_volume_col: bid1_volume
+  ask_volume_col: ask1_volume
+  limit_up_col: limit_up_price
+  limit_down_col: limit_down_price
+  pred_col: hidden_factor_mlp60_h60
+
+market:
+  tick_size: 0.01
+  lot_size: 100
+  min_price: 0.01
+
+calibration:
+  enabled: true
+  method: global_linear
+  calibration_path: /home/fwz/projects/HFT_010-dev_fwz/MarketMakingModel/outputs/calibration/alpha_calibration_mlp60_h60_202410_100.json
+  fallback_to_raw: true
+  pred_col: hidden_factor_mlp60_h60
+  target_col: label_60
+
+prediction:
+  alpha_scale: 1.0
+  use_calibrated_pred: true
+  calibrated_alpha_scale: 1.0
+  clip_pred: true
+  max_abs_pred: 0.01
+  clip_alpha_ticks: true
+  max_fair_shift_ticks: 5.0
+  weak_alpha_ticks: 0.3
+  strong_alpha_ticks: 1.0
+
+strategy:
+  name: alpha_driven_fair_value_mm
+  quote_mode: adaptive
+  allow_cross: false
+  default_quote_style: join_best
+  improve_when_strong_alpha: true
+  max_improve_ticks: 1
+  allow_bid: true
+  allow_ask: true
+  allow_one_sided_quote: true
+  quote_lifetime_ticks: 1
+  cancel_stale_quote: true
+
+cost:
+  fee_mode: rate
+  fee_rate: 0.0001
+  fee_per_share: 0.0
+
+edge:
+  edge_threshold_ticks: 0.2
+  base_adverse_buffer_ticks: 0.3
+  dynamic_adverse_buffer: true
+  volatility_buffer_multiplier: 1.0
+  spread_buffer_multiplier: 0.2
+  inventory_buffer_multiplier: 0.5
+
+inventory:
+  position_source: runtime
+  default_position: 0
+  max_position: 5000
+  warning_position_ratio: 0.7
+  danger_position_ratio: 0.9
+  base_quote_size: 100
+  min_quote_size: 100
+  max_quote_size: 500
+  inventory_skew_ticks: 2.0
+  reduce_quote_size_when_inventory_high: true
+  inventory_size_decay: 0.5
+  disable_bid_when_max_long: true
+  disable_ask_when_max_short: true
+
+quote_size:
+  mode: edge_and_inventory
+  fixed_size: 100
+  edge_size_scaling: true
+  target_edge_ticks: 2.0
+  max_size_multiplier: 3.0
+  inventory_aware_size: true
+  increase_exit_side_size: true
+  decrease_entry_side_size: true
+
+filters:
+  enable_basic_book_filter: true
+  enable_prediction_filter: true
+  enable_spread_filter: true
+  enable_liquidity_filter: true
+  enable_limit_price_filter: true
+  enable_time_filter: true
+  enable_volatility_filter: false
+  min_spread_ticks: 1.0
+  max_spread_ticks: 10.0
+  min_bid1_volume: 100
+  min_ask1_volume: 100
+  limit_price_buffer_ticks: 2.0
+  trading_start_time: "09:35:00"
+  trading_end_time: "14:55:00"
+  avoid_open_minutes: 5
+  avoid_close_minutes: 5
+
+volatility:
+  vol_col: null
+  max_volatility: null
+  use_spread_as_vol_proxy: true
+  high_vol_spread_ticks: 5.0
+
+risk_state:
+  output_risk_state: true
+
+output:
+  save_quote_decisions: true
+  save_no_quote_rows: true
+  save_debug_columns: true
+  columns:
+    - datetime
+    - securityid
+    - bid1
+    - ask1
+    - mid_price
+    - spread
+    - spread_ticks
+    - hidden_factor_mlp60_h60
+    - raw_pred
+    - pred_used
+    - calibrated_pred
+    - calibration_method
+    - calibration_a
+    - calibration_b
+    - raw_alpha_ticks
+    - unclipped_alpha_ticks
+    - fair_shift_ticks
+    - alpha_ticks
+    - alpha_bucket
+    - alpha_clipped
+    - fair_price
+    - quote_fair_price
+    - position
+    - position_ratio
+    - inventory_skew
+    - risk_state
+    - quote_bid
+    - bid_price
+    - bid_size
+    - bid_edge
+    - bid_edge_ticks
+    - bid_reason
+    - quote_ask
+    - ask_price
+    - ask_size
+    - ask_edge
+    - ask_edge_ticks
+    - ask_reason
+    - adverse_buffer
+    - adverse_buffer_ticks
+    - bid_adverse_buffer
+    - ask_adverse_buffer
+    - bid_adverse_buffer_ticks
+    - ask_adverse_buffer_ticks
+    - bid_fee
+    - ask_fee
+    - edge_threshold
+    - edge_threshold_ticks
+    - quote_style
+
+logging:
+  level: INFO

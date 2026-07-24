@@ -1,0 +1,28 @@
+paths:
+  pricing_dataset_path: "data/pricing_dataset_cs_dl_gru_h30_ret120_20241022_20241122_100.csv"
+  output_dir: "output/pricing_30d_ret120_cs_dl_gru_h30"
+
+data:
+  date_col: "date"
+  code_col: "securityid"
+  timestamp_col: "datetime"
+  mid_col: "mid_price"
+  target_col: "ret_120"
+  split_col: "split"
+
+  signals:
+    - name: "cs_dl_gru_h30"
+      col: "hidden_factor_cs_dl_gru_h30"
+
+pricing:
+  return_type: "simple"
+  tick_size: 0.01
+
+calibration:
+  enabled: true
+  method: "linear"
+  calibrate_splits: ["train", "valid"]
+
+ensemble:
+  enabled: false
+  method: "equal_weight"

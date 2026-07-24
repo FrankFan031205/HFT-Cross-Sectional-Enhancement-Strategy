@@ -1,0 +1,34 @@
+project:
+  name: cs_merge_quotes_h60
+  version: v1
+
+data:
+  quote_path: MarketMakingModel/outputs/quote_decisions/quote_decisions_mlp2_h60_202410_100_v5.csv
+  cs_signal_path: CrossSectionalModel/outputs/cs_selection_signal_h60_202410_100.csv
+  output_path: MarketMakingModel/outputs/quote_decisions/quote_decisions_mlp2_h60_202410_100_v5_cs_filtered.csv
+  summary_output_path: CrossSectionalModel/outputs/cs_quote_filter_summary_h60_202410_100.csv
+
+columns:
+  datetime_col: datetime
+  symbol_col: securityid
+  quote_bid_col: quote_bid
+  quote_ask_col: quote_ask
+
+cs_columns:
+  - cs_score_z
+  - cs_rank
+  - cs_group
+  - strong_long_candidate
+  - long_candidate
+  - weak_long_candidate
+  - avoid_candidate
+  - reduce_candidate
+  - strong_reduce_candidate
+  - target_inventory_scale
+  - bid_priority
+  - ask_reduce_priority
+
+logic:
+  bid_filter_mode: long_candidate
+  keep_ask_original: true
+  keep_unmatched_original: true

@@ -1,0 +1,86 @@
+project:
+  name: analyze_cs_trade_pnl_h60
+  version: v1
+
+data:
+  baseline_trade_pnl_path: BacktestingModel/outputs/trades/trades_pnl_queue_mult_0p05_mlp2_h60_202410_100.csv
+  cs_filtered_trade_pnl_path: BacktestingModel/outputs/trades/trades_pnl_queue_mult_0p05_queue_mult_0p05_mlp2_h60_202410_100_cs_filtered.csv
+  cs_signal_path: CrossSectionalModel/outputs/cs_selection_signal_h60_202410_100.csv
+  output_dir: BacktestingModel/outputs/diagnostics/cs_trade_pnl_h60_202410_100
+
+columns:
+  datetime_col: datetime
+  symbol_col: securityid
+
+  side_candidates:
+    - side
+    - trade_side
+    - fill_side
+    - quote_side
+
+  pnl_candidates:
+    - net_pnl
+    - total_net_pnl
+    - pnl
+    - trade_pnl
+
+  bps_candidates:
+    - net_pnl_bps
+    - pnl_bps
+    - avg_net_pnl_bps
+
+  qty_candidates:
+    - qty
+    - fill_qty
+    - order_qty
+
+  notional_candidates:
+    - notional
+    - trade_notional
+    - total_notional
+
+cs_columns:
+  - cs_rank
+  - cs_score_z
+  - cs_group
+  - target_inventory_scale
+  - long_candidate
+  - avoid_candidate
+  - reduce_candidate
+
+side_values:
+  buy:
+    - buy
+    - bid
+    - B
+    - 0
+    - 0.0
+  sell:
+    - sell
+    - ask
+    - S
+    - 1
+    - 1.0
+
+buckets:
+  - name: rank_00_20
+    low: 0.0
+    high: 0.2
+  - name: rank_20_40
+    low: 0.2
+    high: 0.4
+  - name: rank_40_60
+    low: 0.4
+    high: 0.6
+  - name: rank_60_70
+    low: 0.6
+    high: 0.7
+  - name: rank_70_80
+    low: 0.7
+    high: 0.8
+  - name: rank_80_90
+    low: 0.8
+    high: 0.9
+  - name: rank_90_100
+    low: 0.9
+    high: 1.000001

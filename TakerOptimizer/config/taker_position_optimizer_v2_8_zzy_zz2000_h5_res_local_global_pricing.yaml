@@ -1,0 +1,50 @@
+project:
+  version: v2_8_local_global_zzy_zz2000_h5_res_pricing
+data:
+  market_data_path: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerOptimizer/zzy_zz2000_h5_res_v1_existing_optimizer_cache/market/market_zzy_zz2000_h5_res.csv
+  alpha_path: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerOptimizer/zzy_zz2000_h5_res_v1_existing_optimizer_cache/alpha/alpha_zzy_zz2000_h5_res.csv
+  global_alpha_path: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerOptimizer/zzy_zz2000_h5_res_v1_existing_optimizer_cache/alpha/alpha_zzy_zz2000_h5_res.csv
+  local_alpha_path: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerOptimizer/zzy_zz2000_h5_res_v1_existing_optimizer_cache/alpha/alpha_zzy_zz2000_h5_res.csv
+  pricing_path: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerOptimizer/zzy_zz2000_h5_res_v1_existing_optimizer_cache/pricing/pricing_zzy_zz2000_h5_res.csv
+  output_path: TakerOptimizer/outputs/target_positions/taker_target_positions_v2_8_zzy_zz2000_h5_res_local_global_pricing_fulltime.csv
+  log_path: TakerOptimizer/outputs/logs/taker_position_optimizer_v2_8_zzy_zz2000_h5_res_local_global_pricing_fulltime.log
+columns:
+  date_col: date
+  datetime_col: datetime
+  minute_col: minute
+  symbol_col: securityid
+  securityid_col: securityid
+  price_col: mid_price
+  mid_price_col: mid_price
+  ask_col: ask_price
+  bid_col: bid_price
+  ask_volume_col: ask_volume
+  bid_volume_col: bid_volume
+  spread_col: spread
+  alpha_col: alpha_zzy_zz2000_h5_res
+  global_alpha_col: global_alpha_zzy_zz2000_h5_res
+  local_alpha_col: local_alpha_zzy_zz2000_h5_res
+  pricing_pred_col: pred_ret_zzy_zz2000_h5_res
+  fair_price_col: fair_price_zzy_zz2000_h5_res
+optimizer:
+  capital: 200000000
+  target_gross_limit: 0.6
+  max_gross_limit: 0.8
+  single_name_limit: 0.005
+  global_top_n: 100
+  local_buy_top_n: 100
+  global_exit_rank_n: 300
+  use_local_buy_gate: true
+  local_buy_edge_min_bps: 0.0
+  max_spread_bps: 50
+  volume_cap_ratio: 0.03
+  lot_size: 100
+  min_trade_notional: 20000
+  target_weight_band: 2.0e-05
+  trade_cooldown_minutes: 2
+  min_hold_minutes: 0
+  portfolio_rebalance_interval_min: 1
+  rebalance_smoothing: 1.0
+  exit_smoothing: 1.0
+  block_before_time: -1
+  block_after_time: 999999999999999999

@@ -1,0 +1,42 @@
+project:
+  name: BacktestingModel
+  version: final_inventory_aware_v1
+  description: >
+    Final inventory-aware backtesting baseline. This does not modify quote decisions.
+    It evaluates queue-aware fills with a strong-signal policy and A-share inventory constraints.
+
+input:
+  base_trades_path: outputs/trades/trades_pnl_queue_mult_0p05_mlp2_h60_202410_100.csv
+  signal_col: hidden_factor_mlp2_h60
+
+fill_model:
+  mode: queue_aware_trade
+  queue_ahead_multiplier: 0.05
+
+policy:
+  name: abs_top40
+  type: abs_signal_quantile
+  quantile: 0.60
+  description: Keep trades with abs(hidden_factor_mlp2_h60) >= 60th percentile, i.e. top 40% signal strength.
+
+inventory:
+  initial_position_per_symbol: 5000
+  max_position_per_symbol: 15000
+  sell_floor_position: 3000
+  buy_block_position: 9000
+  tplus1: true
+  allow_short: false
+
+fee:
+  mode: single_fill_side_specific
+  commission_rate: 0.00005
+  transfer_fee_rate: 0.00001
+  handling_fee_rate: 0.0000341
+  regulatory_fee_rate: 0.00002
+  stamp_duty_rate: 0.0005
+
+output:
+  final_policy_trades_path: outputs/trades/final_queue005_abs_top40_policy_mlp2_h60_202410_100.csv
+  final_inventory_trades_path: outputs/trades/final_queue005_abs_top40_inventory5000_cap15000_tight_tplus1_mlp2_h60_202410_100.csv
+  final_skipped_path: outputs/trades/final_skipped_queue005_abs_top40_inventory5000_cap15000_tight_tplus1_mlp2_h60_202410_100.csv
+  final_portfolio_prefix: outputs/portfolio/final_queue005_abs_top40_inventory5000_cap15000_tight_tplus1_mlp2_h60_202410_100

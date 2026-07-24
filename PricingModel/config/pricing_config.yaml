@@ -1,0 +1,38 @@
+paths:
+  pricing_dataset_path: "data/pricing_dataset_h60_202410_100.csv"
+  output_dir: "output"
+
+data:
+  date_col: "date"
+  code_col: "securityid"
+  timestamp_col: "datetime"
+  mid_col: "mid_price"
+  target_col: "ret_120"
+  split_col: "split"
+
+  signals:
+    - name: "lgbm_h60"
+      col: "hidden_factor_lgbm_h60"
+
+    - name: "ridge_h60"
+      col: "hidden_factor_ridge_h60"
+
+    - name: "attention_h60"
+      col: "hidden_factor_attention_h60"
+
+    # later you can add:
+    # - name: "lookback_attention_h60"
+    #   col: "hidden_factor_lookback_attention_h60"
+
+pricing:
+  return_type: "simple"
+  tick_size: 0.01
+
+calibration:
+  enabled: true
+  method: "linear"
+  calibrate_splits: ["train", "valid"]
+
+ensemble:
+  enabled: true
+  method: "equal_weight"

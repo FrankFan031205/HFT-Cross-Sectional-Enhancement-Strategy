@@ -1,0 +1,62 @@
+project:
+  name: taker_model_v3b_feature_attention_h30_742_nopricing
+  version: v3b_optimizer_friendly
+  seed: 42
+
+data:
+  market_data_dir: /home/fwz/projects/HFT_010-dev_fwz/PricingModel/data/market_return_20241022_20250114_742_by_date
+  market_file_pattern: market_return_{date}_742.csv
+  optimizer_output_path: /home/fwz/projects/HFT_010-dev_fwz/TakerOptimizer/outputs/target_positions/taker_target_positions_v2_8_feature_attention_h30_local_global_742_nopricing.csv
+
+  start_date: 20241022
+  end_date: 20241122
+
+output:
+  position_output_path: /home/fwz/projects/HFT_010-dev_fwz/TakerModel/outputs/v3b_feature_attention_h30_742_nopricing/positions/taker_positions_v3b_feature_attention_h30_742_nopricing.csv
+  minute_metrics_path: /home/fwz/projects/HFT_010-dev_fwz/TakerModel/outputs/v3b_feature_attention_h30_742_nopricing/metrics/taker_minute_metrics_v3b_feature_attention_h30_742_nopricing.csv
+  daily_metrics_path: /home/fwz/projects/HFT_010-dev_fwz/TakerModel/outputs/v3b_feature_attention_h30_742_nopricing/metrics/taker_daily_metrics_v3b_feature_attention_h30_742_nopricing.csv
+  trade_reason_path: /home/fwz/projects/HFT_010-dev_fwz/TakerModel/outputs/v3b_feature_attention_h30_742_nopricing/metrics/taker_trade_reason_v3b_feature_attention_h30_742_nopricing.csv
+  summary_path: /home/fwz/projects/HFT_010-dev_fwz/TakerModel/outputs/v3b_feature_attention_h30_742_nopricing/metrics/taker_summary_v3b_feature_attention_h30_742_nopricing.csv
+
+columns:
+  datetime_col: datetime
+  date_col: date
+  symbol_col: securityid
+
+  target_weight_col: effective_target_weight
+  label_col: label_30
+
+  bid_col: bid1
+  ask_col: ask1
+  mid_col: mid_price
+
+time_alignment:
+  optimizer_datetime_role: decision_time
+  execution_lag_minutes: 1
+
+execution:
+  capital: 200000000
+  taker_fee_bps: 0.5
+  slippage_bps: 0.0
+
+  entry_rebalance_ratio: 0.5
+  exit_rebalance_ratio: 1.0
+
+filters:
+  require_optimal_for_entry: false
+  require_valid_market: true
+
+  entry_min_abs_delta_notional: 50000.0
+  entry_max_spread_bps: 10.0
+  entry_min_abs_net_alpha_bps: null
+
+  exit_max_spread_bps: 999.0
+  hold_min_abs_net_alpha_bps: null
+
+  exit_when_target_zero: true
+  exit_when_direction_flip: true
+  reduce_when_target_smaller: false
+
+runtime:
+  market_chunksize: 2000000
+  max_missing_rate: 0.2

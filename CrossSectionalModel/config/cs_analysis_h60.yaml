@@ -1,0 +1,15 @@
+project:
+  name: cs_factor_analysis_h60
+  version: v1
+
+data:
+  eval_path: CrossSectionalModel/outputs/cs_factor_eval_h60_202410_100.csv
+  output_dir: CrossSectionalModel/outputs/analysis_h60_202410_100
+
+analysis:
+  top_n: 20
+  suspicious_keywords:
+    - ret
+    - check
+    - future
+    - label

@@ -1,0 +1,82 @@
+project:
+  name: factor_model_ridge_h60
+  version: v1
+  seed: 42
+
+data:
+  raw_data_path: data/raw/factor_features_202410_100.csv
+  processed_data_path: data/processed/factor_features_202410_100_processed.csv
+
+  date_col: date
+  datetime_col: datetime
+  symbol_col: securityid
+
+  feature_cols_path: data/raw/feature_cols_202410_100.yaml
+
+  label_col: label_60
+
+  train_start: 20241022
+  train_end: 20241028
+
+  valid_start: 20241029
+  valid_end: 20241029
+
+  test_start: 20241030
+  test_end: 20241031
+
+preprocess:
+  replace_inf: true
+
+  missing:
+    method: fill_zero
+
+  clip:
+    enable: true
+    method: quantile
+    lower_quantile: 0.01
+    upper_quantile: 0.99
+
+  normalize:
+    enable: true
+    method: cross_sectional_zscore
+    group_col: datetime
+    eps: 1.0e-8
+
+  label:
+    winsorize: true
+    lower_quantile: 0.01
+    upper_quantile: 0.99
+
+model:
+  type: ridge
+
+  params:
+    alpha: 1.0
+    fit_intercept: true
+    random_state: 42
+
+train:
+  save_model: true
+  model_path: models/ridge_h60_202410_100.pkl
+
+prediction:
+  output_col: hidden_factor_ridge_h60
+  output_path: outputs/hidden_factor_ridge_h60_202410_100.csv
+
+evaluation:
+  ic:
+    enable: true
+    method: spearman
+    group_col: datetime
+
+  long_short:
+    enable: true
+    group_col: datetime
+    n_bins: 5
+    long_bin: 5
+    short_bin: 1
+
+output:
+  coef_path: outputs/ridge_coef_h60_202410_100.csv
+  metrics_path: outputs/model_metrics_ridge_h60_202410_100.csv
+  log_path: logs/train_ridge_h60_202410_100.log

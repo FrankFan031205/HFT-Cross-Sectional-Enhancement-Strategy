@@ -1,0 +1,78 @@
+input:
+  quote_decision_path: ../MarketMakingModel/outputs/quote_decisions/quote_decisions_mlp2_h60_202410_100_v5.csv
+  snapshot_state_path: /home/fwz/projects/HFT_010-dev_fwz/PricingModel/data/pricing_dataset_h60_202410_100_full.csv
+  trade_replay_path: ''
+output:
+  fill_path: outputs/fills/fills_touched_mlp2_h60_202410_100.csv
+  trade_cache_path: outputs/cache/raw_trades_mlp2_h60_202410_100.csv
+  snapshot_cache_path: outputs/cache/snapshot_state_for_quotes_mlp2_h60_202410_100.csv
+  pnl_path: outputs/trades/trades_pnl_touched_mlp2_h60_202410_100.csv
+  daily_pnl_path: outputs/metrics/daily_pnl_touched_mlp2_h60_202410_100.csv
+  summary_path: outputs/metrics/summary_touched_mlp2_h60_202410_100.csv
+  factor_pnl_path: outputs/metrics/factor_pnl_touched_mlp2_h60_202410_100.csv
+  enriched_fill_path: outputs/fills/fills_touched_enriched_mlp2_h60_202410_100.csv
+backtest:
+  latency_ms: 0
+  quote_ttl_ms: 500
+  order_qty: 100
+  max_book_level: 10
+  price_eps: 1.0e-06
+  snapshot_chunksize: 1000000
+fill_model:
+  mode: touched_trade
+  full_fill_if_price_crossed: true
+  allow_partial_fill: true
+  output_all_orders: false
+  queue_ahead_multiplier: 0.0
+trade_side:
+  aggressive_buy_values:
+  - '0'
+  - '0.0'
+  - 0
+  aggressive_sell_values:
+  - '1'
+  - '1.0'
+  - 1
+columns:
+  quote:
+    date: date
+    datetime: datetime
+    securityid: securityid
+    quote_bid: quote_bid
+    quote_ask: quote_ask
+    bid_quote_price: bid_quote_price
+    ask_quote_price: ask_quote_price
+    fallback_bid_quote_price: bid1
+    fallback_ask_quote_price: ask1
+  trade:
+    datetime: datetime
+    securityid: securityid
+    price: price
+    qty: qty
+    side: side
+    seqno: seqno
+db:
+  trade_database: A_share_Trade
+  trade_table_template: '{date}'
+  trade_sql_template: "SELECT\n    time AS time,\n    toString(SecurityID) AS securityid,\n\
+    \    price AS price,\n    qty AS qty,\n    side AS side,\n    seqno AS seqno\n\
+    FROM `{database}`.`{table}`\nWHERE SecurityID IN ({symbols})\n  AND time >= {start_time_int}\n\
+    \  AND time < {end_time_int}\nORDER BY SecurityID, time, seqno\n"
+clickhouse_connect:
+  host: ''
+  port: 8123
+  username: ''
+  password: ''
+  database: ''
+data_scale:
+  trade_price_scale: 100.0
+signal:
+  col: hidden_factor_mlp2_h60
+  n_bins: 5
+fee:
+  mode: single_fill_side_specific
+  commission_rate: 5.0e-05
+  transfer_fee_rate: 1.0e-05
+  handling_fee_rate: 3.41e-05
+  regulatory_fee_rate: 2.0e-05
+  stamp_duty_rate: 0.0005

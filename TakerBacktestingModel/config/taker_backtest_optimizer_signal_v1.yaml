@@ -1,0 +1,60 @@
+project:
+  name: taker_backtest_optimizer_signal
+  version: v1
+  seed: 42
+
+data:
+  optimizer_signal_path: TakerOptimizer/outputs/taker_optimizer_signal_v1_20241022_20241122_100.csv
+  market_data_path: MarketMakingModel/data/market_return_20241022_20241122_100_enriched.csv
+  output_dir: TakerBacktestingModel/outputs
+
+  date_start:
+  date_end:
+
+  chunksize: 2000000
+
+  optimizer_status_ok:
+    - optimal
+
+columns:
+  datetime_col: datetime
+  symbol_col: securityid
+  date_col: date
+
+  side_col: side
+  status_col: optimizer_status
+  selected_col: selected
+
+  target_weight_col: auto
+  weight_col: auto
+
+  bid_col: auto
+  ask_col: auto
+  mid_col: auto
+
+  symbol_zfill:
+
+execution:
+  initial_capital: 200000000
+
+  signal_delay_minutes: 1
+
+  target_gross_weight_if_missing: 0.10
+
+  allow_short: true
+  liquidate_missing_signals: true
+  selected_only: true
+
+  round_lot: 100
+  price_scale: 1
+  min_trade_notional: 5000
+
+  commission_bps: 1.0
+  stamp_tax_bps: 5.0
+  slippage_bps: 0.0
+  fallback_half_spread_bps: 2.0
+
+outputs:
+  tag: optimizer_signal_v1
+  save_trades: true
+  save_equity_curve: true

@@ -1,0 +1,57 @@
+project:
+  name: taker_model_v3b_feature_transformer_h120_742_pricing
+  version: v3b_optimizer_friendly
+  seed: 42
+data:
+  market_data_dir: TakerModel/cache/market_by_day/20241022
+  market_file_pattern: market_return_{date}_742.csv
+  optimizer_output_path: TakerOptimizer/outputs/target_positions/by_day/target_positions_v2_10_feature_transformer_h120_20241022.csv
+  start_date: 20241022
+  end_date: 20241022
+  initial_position_path: TakerOptimizer/state/current_positions.csv
+  current_position_path: TakerOptimizer/state/current_positions.csv
+output:
+  position_output_path: TakerModel/outputs/sequential/feature_transformer_h120_20241022/positions/taker_positions_feature_transformer_h120_20241022.csv
+  minute_metrics_path: TakerModel/outputs/sequential/feature_transformer_h120_20241022/metrics/taker_minute_metrics_feature_transformer_h120_20241022.csv
+  daily_metrics_path: TakerModel/outputs/sequential/feature_transformer_h120_20241022/metrics/taker_daily_metrics_feature_transformer_h120_20241022.csv
+  trade_reason_path: TakerModel/outputs/sequential/feature_transformer_h120_20241022/metrics/taker_trade_reason_feature_transformer_h120_20241022.csv
+  summary_path: TakerModel/outputs/sequential/feature_transformer_h120_20241022/metrics/taker_summary_feature_transformer_h120_20241022.csv
+columns:
+  datetime_col: datetime
+  date_col: date
+  symbol_col: securityid
+  target_weight_col: effective_target_weight
+  label_col: label_120
+  bid_col: bid1
+  ask_col: ask1
+  mid_col: mid_price
+time_alignment:
+  optimizer_datetime_role: decision_time
+  execution_lag_minutes: 1
+execution:
+  capital: 200000000
+  taker_fee_bps: 0.5
+  slippage_bps: 0.0
+  entry_rebalance_ratio: 0.5
+  exit_rebalance_ratio: 1.0
+filters:
+  require_optimal_for_entry: false
+  require_valid_market: true
+  entry_min_abs_delta_notional: 50000.0
+  entry_max_spread_bps: 10.0
+  entry_min_abs_net_alpha_bps: null
+  exit_max_spread_bps: 999.0
+  hold_min_abs_net_alpha_bps: null
+  exit_when_target_zero: true
+  exit_when_direction_flip: true
+  reduce_when_target_smaller: false
+runtime:
+  market_chunksize: 2000000
+  max_missing_rate: 0.2
+sequential:
+  enabled: true
+  date: 20241022
+  target_position_path: TakerOptimizer/outputs/target_positions/by_day/target_positions_v2_10_feature_transformer_h120_20241022.csv
+  initial_position_path: TakerOptimizer/state/current_positions.csv
+  daily_pnl_output_path: TakerModel/outputs/sequential/feature_transformer_h120_20241022/metrics/daily_pnl_20241022.csv
+  eod_position_output_path: TakerModel/outputs/sequential/feature_transformer_h120_20241022/positions/eod_positions_20241022.csv

@@ -1,0 +1,38 @@
+# TakerOptimizer config stub for ZZY ZZ2000 prediction + execution quote data.
+# Put this file under TakerOptimizer/config/ to follow this project's config/ convention.
+
+data_source:
+  name: zzy_zz2000_optimizer_data
+  type: parquet_by_day
+  input_dir: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerOptimizer/zzy_zz2000_h5_res_v1
+  file_pattern: optimizer_input_{date}.parquet
+  align_key: [date, sid, ts]
+  decision_interval_sec: 10
+  universe: zz2000
+  date_range: [20241217, 20250114]
+
+signal:
+  horizon_min: 5
+  model: res                 # res or ts
+  raw_col: pred_ret
+  z_col: signal_z
+  label_col: fwd_ret_label   # optional; exists only when --include-y was used
+
+execution:
+  buy_price_col: exec_buy_price       # future 60s ask TWAP proxy, for offline simulation
+  sell_price_col: exec_sell_price     # future 60s bid TWAP proxy, for offline simulation
+  mid_price_col: exec_mid_price
+  spread_bps_col: exec_spread_bps
+  volume_col: volume_60s
+  max_trade_notional_col: max_participation_notional
+  max_trade_shares_col: max_participation_shares
+  participation_rate: 0.03
+
+optimizer:
+  gross_limit: 0.30
+  single_name_limit: 0.003
+  entry_z: 1.5
+  exit_z: 0.3
+  max_names_per_timestamp: 80
+  market_neutral: true
+  cost_aware: true

@@ -1,0 +1,44 @@
+project:
+  name: taker_model_v1
+  version: v1
+  seed: 42
+
+data:
+  market_data_path: /home/fwz/projects/HFT_010-dev_fwz/PricingModel/data/market_return_20241022_20241122_100_common_60factors_enriched.csv
+  optimizer_output_path: /home/fwz/projects/HFT_010-dev_fwz/TakerOptimizer/outputs/target_positions/taker_target_positions_v2_3_pricing_cnn_gru_h30_relaxed.csv
+
+output:
+  position_output_path: /home/fwz/projects/HFT_010-dev_fwz/TakerModel/outputs/positions/taker_positions_v1_pricing_cnn_gru_h30_to_h120_relaxed.csv
+  minute_metrics_path: /home/fwz/projects/HFT_010-dev_fwz/TakerModel/outputs/metrics/taker_minute_metrics_v1_pricing_cnn_gru_h30_to_h120_relaxed.csv
+  daily_metrics_path: /home/fwz/projects/HFT_010-dev_fwz/TakerModel/outputs/metrics/taker_daily_metrics_v1_pricing_cnn_gru_h30_to_h120_relaxed.csv
+  summary_path: /home/fwz/projects/HFT_010-dev_fwz/TakerModel/outputs/metrics/taker_summary_v1_pricing_cnn_gru_h30_to_h120_relaxed.csv
+
+columns:
+  datetime_col: datetime
+  date_col: date
+  symbol_col: securityid
+
+  side_col: side
+  optimizer_status_col: optimizer_status
+  weight_col: effective_target_weight
+
+  bid_col: auto
+  ask_col: auto
+  mid_col: auto
+
+  label_col: label_120
+
+time_alignment:
+  optimizer_datetime_role: decision_time
+  execution_lag_minutes: 1
+  execution_price_time: first_snapshot_of_minute
+
+execution:
+  capital: 200000000
+  taker_fee_bps: 1.5
+  slippage_bps: 0.0
+
+  only_optimal: true
+  allow_sell: true
+
+  min_abs_trade_weight: 0.0

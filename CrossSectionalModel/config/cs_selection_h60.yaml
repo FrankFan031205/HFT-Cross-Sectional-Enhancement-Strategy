@@ -1,0 +1,35 @@
+project:
+  name: cs_selection_signal_h60
+  version: v1
+
+data:
+  score_path: CrossSectionalModel/outputs/cs_score_h60_202410_100.csv
+  output_path: CrossSectionalModel/outputs/cs_selection_signal_h60_202410_100.csv
+
+columns:
+  datetime_col: datetime
+  symbol_col: securityid
+  label_col: label_60
+  label_rank_col: label_cs_60_rank
+  label_excess_col: label_cs_60_demean
+  score_col: cs_score_z
+  rank_col: cs_rank
+  group_col: cs_group
+
+selection:
+  strong_long_threshold: 0.90
+  long_threshold: 0.80
+  weak_long_threshold: 0.70
+  avoid_threshold: 0.40
+  reduce_threshold: 0.30
+  strong_reduce_threshold: 0.20
+
+target_inventory:
+  rank_90: 1.00
+  rank_80: 0.70
+  rank_70: 0.40
+  rank_60: 0.20
+  default: 0.00
+
+output:
+  keep_labels: true

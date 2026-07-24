@@ -1,0 +1,26 @@
+project:
+  name: cs_factor_eval_h60
+  version: v1
+
+data:
+  input_path: CrossSectionalModel/data/processed/cs_dataset_h60_202410_100.csv
+  output_path: CrossSectionalModel/outputs/cs_factor_eval_h60_202410_100.csv
+
+columns:
+  datetime_col: datetime
+  label_col: label_60
+  label_rank_col: label_cs_60_rank
+  label_excess_col: label_cs_60_demean
+
+features:
+  auto_detect: true
+  include_suffix: _cs_z
+  exclude_columns:
+    - label_cs_60_rank
+    - label_cs_60_demean
+
+evaluation:
+  top_quantile: 0.2
+  bottom_quantile: 0.2
+  min_obs_per_datetime: 30
+  batch_size: 6

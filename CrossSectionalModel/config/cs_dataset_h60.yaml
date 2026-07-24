@@ -1,0 +1,39 @@
+project:
+  name: cs_dataset_h60
+  version: v1
+
+data:
+  input_path: FactorModel/data/raw/factor_features_202410_100.csv
+  output_path: CrossSectionalModel/data/processed/cs_dataset_h60_202410_100.csv
+
+columns:
+  datetime_col: datetime
+  symbol_col: securityid
+  label_col: label_60
+
+features:
+  auto_detect: true
+  include_prefixes:
+    - fwz
+    - f
+  exclude_columns:
+    - datetime
+    - securityid
+    - date
+    - time
+    - label_30
+    - label_60
+    - label_90
+    - label_120
+
+cross_section:
+  min_stocks_per_datetime: 30
+  eps: 1.0e-8
+  clip_zscore: 10.0
+  create_feature_cs_z: true
+  create_feature_cs_rank: false
+  create_label_cs_rank: true
+  create_label_cs_demean: true
+
+output:
+  keep_original_features: false

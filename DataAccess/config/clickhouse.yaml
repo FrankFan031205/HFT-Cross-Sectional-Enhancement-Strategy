@@ -1,0 +1,46 @@
+clickhouse:
+  host: "127.0.0.1"
+  port: 8123
+  username: "default"
+  password: ""
+  database: "default"
+
+settings:
+  max_threads: 32
+  max_memory_usage: 80000000000
+
+tables:
+  snapshot_500ms:
+    mode: "daily_table"
+    database: "500ms"
+    table_template: "{date}"
+    time_col: "datetime"
+    sid_col: "SecurityID"
+
+  trade:
+    mode: "daily_table"
+    database: "A_share_Trade"
+    table_template: "{date}"
+    time_col: "time"
+    sid_col: "SecurityID"
+
+  order:
+    mode: "daily_table"
+    database: "A_share_Order"
+    table_template: "{date}"
+    time_col: "time"
+    sid_col: "SecurityID"
+
+  cancel:
+    mode: "daily_table"
+    database: "A_share_Cancel"
+    table_template: "{date}"
+    time_col: "time"
+    sid_col: "SecurityID"
+
+  index_500ms:
+    mode: "daily_table"
+    database: "stock_index_main_500ms_v2"
+    table_template: "{date}"
+    time_col: "timestamp"
+    sid_col: "SecurityID"

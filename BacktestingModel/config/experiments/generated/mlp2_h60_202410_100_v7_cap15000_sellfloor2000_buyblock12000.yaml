@@ -1,0 +1,33 @@
+experiment:
+  description: mlp2_h60_202410_100_v7_cap15000_sellfloor2000_buyblock12000 backtest
+    experiment
+  tag: mlp2_h60_202410_100_v7_cap15000_sellfloor2000_buyblock12000
+fee:
+  commission_rate: 5.0e-05
+  handling_fee_rate: 3.41e-05
+  mode: single_fill_side_specific
+  regulatory_fee_rate: 2.0e-05
+  stamp_duty_rate: 0.0005
+  transfer_fee_rate: 1.0e-05
+fill_model:
+  mode: queue_aware_trade
+  queue_ahead_multiplier: 0.05
+input:
+  base_config_path: config/backtest.yaml
+  quote_decision_path: ../MarketMakingModel/outputs/quote_decisions/quote_decisions_mlp2_h60_202410_100_v7_buy_risk_state_optimizer.csv
+inventory:
+  allow_short: false
+  initial_position_per_symbol: 5000
+  max_position_per_symbol: 15000
+  tplus1: true
+  sell_floor_position: 2000
+  buy_block_position: 12000
+output:
+  fill_prefix: queue_mult_0p05
+policy:
+  name: abs_top40
+  quantile: 0.6
+  type: abs_signal_quantile
+signal:
+  col: hidden_factor_mlp2_h60
+  n_bins: 5

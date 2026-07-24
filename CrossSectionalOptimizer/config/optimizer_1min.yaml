@@ -1,0 +1,58 @@
+project:
+  name: CrossSectionalOptimizer
+  version: v1
+  seed: 42
+
+data:
+  alpha_path: FactorModel/outputs/hidden_factor_mlp2_h60_202410_100.csv
+  market_path: PricingModel/data/market_return_202410_100.csv
+
+  industry_dir: /home/cross_common_data/industry
+  fallback_industry_dir: /home/cross_common_data/industry
+
+  industry_map_path: CrossSectionalOptimizer/data/risk_exposure/industry_map_20241022_20241122.csv
+  optimizer_input_path: CrossSectionalOptimizer/data/optimizer_input/optimizer_input_mlp2_h60_202410_100.csv
+  optimizer_output_path: CrossSectionalOptimizer/outputs/signals/optimizer_signal_mlp2_h60_202410_100.csv
+  diagnostic_path: CrossSectionalOptimizer/outputs/diagnostics/optimizer_diagnostics_mlp2_h60_202410_100.csv
+
+date:
+  start_date: "2024-10-22"
+  end_date: "2024-11-22"
+
+columns:
+  datetime_col: datetime
+  symbol_col: securityid
+  alpha_col: hidden_factor_mlp2_h60
+
+  mid_col: mid_price
+  spread_col: spread
+  market_value_col: marketValue
+  turnover_col: turnoverRate
+  volatility_col: volatility_60
+
+  industry_col: industryID1
+  industry_name_col: industryName1
+
+optimizer:
+  horizon: 1min
+  method: cvxpy_qp
+
+  risk_aversion: 1.0
+  turnover_penalty: 0.05
+
+  gross_limit: 1.0
+  single_name_limit: 0.02
+  turnover_limit: 0.30
+
+  industry_limit: 0.03
+  size_limit: 0.05
+  liquidity_limit: 0.10
+  volatility_limit: 0.10
+
+  min_names_per_timestamp: 20
+  solver: OSQP
+
+quote_mapping:
+  max_quote_intensity: 1.0
+  weight_scale: 0.02
+  min_quote_weight: 0.002

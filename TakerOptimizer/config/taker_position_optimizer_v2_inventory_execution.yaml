@@ -1,0 +1,63 @@
+project:
+  name: taker_position_optimizer
+  version: v2_2_pricing_cnn_gru_h30
+  seed: 42
+data:
+  market_data_path: PricingModel/output/pricing_30d_ret120_all_60factors_common_universe/pricing/cs_dl_cnn_gru_h30/priced_dataset.csv
+  prediction_path: ''
+  barra_proxy_path: CrossSectionalModel/data/barra_proxy/barra_proxy_20241022_20250114.csv
+  real_position_path: ''
+  output_path: TakerOptimizer/outputs/target_positions/taker_target_positions_v2_3_pricing_cnn_gru_h30_relaxed.csv
+  log_path: TakerOptimizer/outputs/logs/taker_position_optimizer_v2_3_pricing_cnn_gru_h30_relaxed.log
+columns:
+  date_col: date
+  datetime_col: datetime
+  symbol_col: securityid
+  alpha_col: pred_ret_cs_dl_cnn_gru_h30
+  fair_price_col: fair_price_cs_dl_cnn_gru_h30
+  price_col: mid_price
+  bid_col: bid1
+  ask_col: ask1
+  spread_col: spread
+  bid_volume_col: bid1_volume
+  ask_volume_col: ask1_volume
+  limit_up_col: limit_up_price
+  limit_down_col: limit_down_price
+  industry_col: industryID1
+  barra_style_cols:
+  - size_z
+  - liquidity_z
+  - value_z
+  - momentum_z
+  - volatility_z
+optimizer:
+  capital: 200000000
+  portfolio_mode: long_only
+  base_gross_limit: 0.05
+  max_gross_limit: 0.1
+  single_name_limit: 0.005
+  turnover_limit: 0.015
+  min_names_per_timestamp: 5
+  pred_horizon_sec: 30
+  alpha_scale_bps: 10000.0
+  taker_fee_bps: 1.0
+  impact_bps: 0.5
+  min_net_alpha_bps: -3.0
+  max_spread_bps: 80.0
+  volume_cap_ratio: 0.2
+  min_trade_notional: 5000
+  block_before_time: 09:35:00
+  block_after_time: '14:55:00'
+  rebalance_smoothing: 0.3
+  no_trade_band_bps: 1.0
+  use_real_position: false
+  enforce_sellable_inventory: true
+  risk_aversion: 1.0
+  barra_risk_aversion: 0.2
+  industry_risk_aversion: 0.1
+  turnover_penalty: 0.05
+  style_limit: 0.03
+  industry_limit: 0.03
+  lot_size: 100
+  chunksize: 1000000
+  solver: OSQP

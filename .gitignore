@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.so
+.ipynb_checkpoints/
+
+# Data / results
+*.parquet
+*.csv
+*.pkl
+*.pickle
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.feather
+*.arrow
+*.pt
+*.pth
+*.ckpt
+*.joblib
+
+# Logs / figures / archives
+*.log
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.docx
+*.zip
+*.tar
+*.tar.gz
+
+# Output folders
+data/
+raw/
+processed/
+output/
+outputs/
+logs/
+cache/
+tmp/
+temp/
+state/
+inputs/

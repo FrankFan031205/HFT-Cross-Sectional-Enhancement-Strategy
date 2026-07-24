@@ -1,0 +1,36 @@
+project:
+  name: cs_score_eval_h60
+  version: v1
+
+data:
+  score_path: CrossSectionalModel/outputs/cs_score_h60_202410_100.csv
+  output_dir: CrossSectionalModel/outputs/cs_score_eval_h60_202410_100
+
+columns:
+  datetime_col: datetime
+  symbol_col: securityid
+  label_col: label_60
+  label_rank_col: label_cs_60_rank
+  label_excess_col: label_cs_60_demean
+  score_col: cs_score_z
+  rank_col: cs_rank
+  group_col: cs_group
+
+evaluation:
+  top_quantile: 0.2
+  bottom_quantile: 0.2
+  min_obs_per_datetime: 30
+
+intraday_buckets:
+  - name: open_0930_1000
+    start: "09:30:00"
+    end: "10:00:00"
+  - name: morning_1000_1130
+    start: "10:00:00"
+    end: "11:30:00"
+  - name: afternoon_1300_1430
+    start: "13:00:00"
+    end: "14:30:00"
+  - name: close_1430_1500
+    start: "14:30:00"
+    end: "15:00:00"

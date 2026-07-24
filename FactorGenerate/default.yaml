@@ -1,0 +1,65 @@
+############################## ---数据存储，计算结果存储路径设置--- ##############################
+# error_file: 报错信息输出log路径
+# factor_data_file: 生成的因子数据存储路径
+# evaluate_file: 评价结果的存储路径
+error_file: /home/fwz/HFT_010/Error
+factor_data_file: /home/fwz/HFT_010/Data_010
+evaluate_file: /home/fwz/HFT_010/Evaluation
+
+############################## ---因子计算的设置--- ##############################
+# max_waiting_sequence: 前面多少个快照的因子由于时序计算而不完备
+# pred_horizon:预测未来多少个快照的收益率
+# sample_securityid_num:随机抽取了多少只股票生产评价（A股目前最多不到6000只，设置为6000就代表全A所有股票）一般用个500股票已经可以看出整体的统计效应
+# max_thread:所有多核计算最大的核心使用数量
+# random_seed:随机种子，确保复现的精准性
+# snapshot_len:采用多长时间间隔的快照（500代表500ms快照，1000代表1000ms出一个快照，当前只能设定为500的整数倍）
+max_waiting_sequence: 150
+pred_horizon: 30,60,90,120,150,180
+max_thread: 150
+sample_securityid_num: 500
+random_seed: 36
+snapshot_len: 1000
+
+
+############################## ---因子评价的设置--- ##############################
+# dump_data: 本次生成的数据是否需要落地数据值（一般只用于经过筛选之后入库的因子才会落数据到硬盘，平时看评价即可）
+# save_data_parquet_version: 1表示按日期分区保存，2表示按timestamp分区保存  前者架构适合用于增量因子研究，后者架构适合用于模型研究
+# evaluate_date: 本次生成的数据是否需要输出评价（用于筛选阶段对因子计算评价，入库的时候落硬盘可以不用重新跑评价）
+# evaluate_horizon: 评价使用哪一个pred_horizon
+# evaluate_type: 目前共搭载了时序ic，时序分箱图，截面ic，截面多空收益四种评价指标，由于评价指标计算略微耗时，按需选取
+# boxplot_bins: 时序分箱图的分箱数量，分箱越少速度越快
+
+# 因子评价本身是比较耗时的操作，注意计算时间的分配
+# 箱型图的计算极度耗时，可以一定程度上不使用箱型图
+
+dump_data: 0
+save_data_parquet_version: 2
+evaluate_data: 1
+evaluate_horizon: 60
+evaluate_type: timeseries_ic #,crossseries_ic,corsseries_longshort_return timeseries_boxplot
+boxplot_bins: 20
+
+
+############################## ---数据库路径--- ##############################
+# clickhouse数据库分布式节点，各自使用自己所在机房即可
+
+# h20服务器
+# clickhouse:
+#     host: localhost
+#     port: 8123
+#     username: reader
+#     passward: reader20251223
+
+# 数讯机房
+# clickhouse:
+#     host: 192.168.2.51
+#     port: 8123
+#     username: reader
+#     passward: reader20251223
+
+# H20服务器
+clickhouse:
+    host: localhost
+    port: 8123
+    username: reader
+    passward: reader20251223

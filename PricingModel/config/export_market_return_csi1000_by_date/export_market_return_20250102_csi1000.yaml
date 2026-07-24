@@ -1,0 +1,46 @@
+project:
+  name: export_market_return_20250102_csi1000
+date:
+  start: 20250102
+  end: 20250102
+universe:
+  source_csv: ../FactorModel/data/raw/factor_features_20250102_csi1000.csv
+  date_col: date
+  securityid_col: securityid
+  universe_file: ../PricingModel/data/universe_csi1000.csv
+  file: ../PricingModel/data/universe_csi1000.csv
+  path: ../PricingModel/data/universe_csi1000.csv
+  csv_path: ../PricingModel/data/universe_csi1000.csv
+  sample: null
+  sample_size: null
+  n_symbols: null
+database:
+  table: '`500ms`.`{date}`'
+  securityid_col: SecurityID
+  time_col: datetime
+  bid1_col: bidprice1
+  ask1_col: askprice1
+  bid1_volume_col: bidvolume1
+  ask1_volume_col: askvolume1
+  date_filter_col: ''
+  securityid_type: string
+  query_chunk_size: 50
+  price_scale: 100.0
+limit:
+  enable: true
+  table: '`A_share_Limit`.`{date}`'
+  securityid_col: SecurityID
+  securityid_type: int
+  limit_up_col: limitUpPrice
+  limit_down_col: limitDownPrice
+  price_scale: 100.0
+return:
+  horizons:
+  - 30
+  - 60
+  - 90
+  - 120
+  drop_nan_returns: true
+output:
+  csv_path: ../PricingModel/data/market_return_20241022_20250114_csi1000_by_date/market_return_20250102_csi1000.csv
+  error_log_path: ../PricingModel/data/market_return_20241022_20250114_csi1000_by_date/logs/market_return_20250102_csi1000_errors.txt

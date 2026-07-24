@@ -1,0 +1,54 @@
+project:
+  name: taker_position_optimizer
+  version: v2_8_local_global_742_cs_dl_cnn_gru_h30_pricing
+  seed: 42
+data:
+  start_date: 20241022
+  end_date: 20241122
+  market_data_path: PricingModel/data/market_return_20241022_20250114_742_by_date
+  global_alpha_path: FactorModel/outputs/hidden_factor_cs_dl_cnn_gru_h30_20241022_20241122_742.csv
+  local_alpha_path: FactorModel/outputs/hidden_factor_cs_dl_cnn_gru_h30_20241022_20241122_742.csv
+  pricing_path: PricingModel/output/pricing_30d_ret120_selected_12_742factors_rank_guarded/pricing/cs_dl_cnn_gru_h30/priced_dataset.csv
+  output_path: TakerOptimizer/outputs/target_positions/taker_target_positions_v2_8_cnn_gru_h30_local_global_742_pricing.csv
+  log_path: TakerOptimizer/outputs/logs/taker_position_optimizer_v2_8_cnn_gru_h30_local_global_742_pricing.log
+columns:
+  date_col: date
+  datetime_col: datetime
+  symbol_col: securityid
+  global_alpha_col: hidden_factor_cs_dl_cnn_gru_h30
+  local_alpha_col: hidden_factor_cs_dl_cnn_gru_h30
+  pricing_pred_col: pred_ret_cs_dl_cnn_gru_h30
+  fair_price_col: fair_price_cs_dl_cnn_gru_h30
+  price_col: mid_price
+  bid_col: bid1
+  ask_col: ask1
+  spread_col: spread
+  bid_volume_col: bid1_volume
+  ask_volume_col: ask1_volume
+  limit_up_col: limit_up_price
+  limit_down_col: limit_down_price
+optimizer:
+  capital: 200000000
+  target_gross_limit: 0.6
+  max_gross_limit: 0.8
+  single_name_limit: 0.008
+  turnover_limit: 0.08
+  global_top_n: 300
+  global_exit_rank_n: 450
+  global_ewma_halflife_min: 15
+  portfolio_rebalance_interval_min: 5
+  rebalance_smoothing: 0.8
+  exit_smoothing: 0.8
+  target_weight_band: 2.0e-05
+  min_hold_minutes: 10
+  trade_cooldown_minutes: 2
+  use_local_buy_gate: true
+  local_buy_top_n: 400
+  local_buy_edge_min_bps: -5.0
+  max_spread_bps: 100.0
+  volume_cap_ratio: 0.35
+  min_trade_notional: 10000
+  block_before_time: 09:35:00
+  block_after_time: '14:50:00'
+  lot_size: 100
+  chunksize: 1000000

@@ -1,0 +1,16 @@
+clickhouse:
+  host: "127.0.0.1"
+  port: 8123
+  database: "500ms"
+
+data:
+  table: "20241022"
+
+factor:
+  horizons:
+    - 30
+    - 60
+    - 300
+
+evaluation:
+  bins: 10

@@ -1,0 +1,42 @@
+project:
+  name: eval_hidden_factor_attention_h60
+  version: v1
+
+data:
+  factor_data_path: outputs/hidden_factor_attention_h60_202410_100.csv
+
+  date_col: date
+  datetime_col: datetime
+  symbol_col: securityid
+  factor_col: hidden_factor_attention_h60
+  label_col: label_60
+
+  start_date: 20241030
+  end_date: 20241031
+
+evaluation:
+  ic:
+    enable: true
+    method: spearman
+    group_col: datetime
+
+  cross_sectional_ic:
+    enable: true
+    method: spearman
+    group_col: datetime
+
+  long_short_return:
+    enable: true
+    group_col: datetime
+    n_bins: 5
+    long_bin: 5
+    short_bin: 1
+
+  quantile_return:
+    enable: true
+    group_col: datetime
+    n_bins: 5
+
+output:
+  result_path: outputs/eval_hidden_factor_attention_h60_202410_100.csv
+  timeseries_path: outputs/eval_hidden_factor_attention_h60_202410_100_timeseries.csv

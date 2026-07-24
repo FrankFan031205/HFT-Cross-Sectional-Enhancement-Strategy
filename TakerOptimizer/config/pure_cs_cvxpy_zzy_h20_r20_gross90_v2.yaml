@@ -1,0 +1,85 @@
+strategy:
+  name: pure_cs_cvxpy_zzy_h20_r20_gross90_v2
+  capital: 200000000
+  prediction_horizon_min: 20
+  rebalance_interval_min: 20
+  rebalance_by: clock
+input:
+  path_glob: /mnt/data1/fwz/HFT_010-dev_fwz_outputs/TakerPipeline/zzy_pure_cs_h20_res_minute_input/*.parquet
+  paths: []
+  resample_to_minute: false
+  symbol_zfill: 6
+columns:
+  date: date
+  datetime: datetime
+  symbol: securityid
+  signal: pred_ret_h20
+  price: mid_price
+  bid: bid1
+  ask: ask1
+  bid_volume: bid_volume1
+  ask_volume: ask_volume1
+  benchmark_weight: benchmark_weight
+  limit_up_price: limit_up
+  limit_down_price: limit_down
+  market_turnover_amount: turnover_amount
+  industry: industry
+alpha:
+  method: zscore
+  scale: 0.0005
+  winsor_low: 0.01
+  winsor_high: 0.99
+  neutralize: false
+  neutralize_style_cols:
+  - marketValue
+  - volatility_60
+  - turnoverRate
+  standardize_after_neutralize: false
+portfolio:
+  gross_target: 0.9
+  gross_min: 0.84
+  gross_hard_min: 0.8
+  gross_max: 0.96
+  long_only: true
+  single_name_cap: 0.008
+  cap_at_least_benchmark: true
+  active_l1_limit: 0.25
+  lambda_active: 0.0001
+cost:
+  fill_mode: opponent_price
+  fee_rate: 5.0e-05
+  lambda_turnover: 0.001
+turnover:
+  limit_per_rebalance: 0.04
+  daily_budget: 1.0
+  initial_build_limit: 1.0
+  initial_build_ignore_daily_budget: true
+  min_trade_notional: 20000
+  lot_size: 100
+  renormalize_after_min_trade: false
+execution_constraints:
+  use_limit_up_down: false
+  use_volume_cap: false
+  participation: 0.1
+  use_market_turnover_cap: false
+  market_turnover_participation: 0.02
+risk_constraints:
+  use_industry_constraint: false
+  industry_tol: 0.02
+  use_style_constraint: false
+  style_cols:
+  - marketValue
+  - volatility_60
+  - turnoverRate
+  style_tol: 0.02
+solver:
+  solvers:
+  - CLARABEL
+  - OSQP
+  - SCS
+  verbose: false
+output:
+  dir: /mnt/data1/fwz/HFT_010-dev_fwz/TakerOptimizer/outputs/pure_cs_cvxpy_zzy_h20_r20_gross90_v2
+  target_file: target_positions.csv
+  summary_file: summary_by_rebalance.csv
+  config_snapshot_file: config_used.yaml

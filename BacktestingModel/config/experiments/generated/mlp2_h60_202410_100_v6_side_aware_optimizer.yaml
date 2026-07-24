@@ -1,0 +1,32 @@
+experiment:
+  tag: mlp2_h60_202410_100_v6_side_aware_optimizer
+  description: mlp2_h60_202410_100_v6_side_aware_optimizer backtest experiment
+input:
+  quote_decision_path: ../MarketMakingModel/outputs/quote_decisions/quote_decisions_mlp2_h60_202410_100_v6_side_aware_optimizer.csv
+  base_config_path: config/backtest.yaml
+signal:
+  col: hidden_factor_mlp2_h60
+  n_bins: 5
+fill_model:
+  mode: queue_aware_trade
+  queue_ahead_multiplier: 0.05
+policy:
+  name: abs_top40
+  type: abs_signal_quantile
+  quantile: 0.6
+inventory:
+  initial_position_per_symbol: 5000
+  max_position_per_symbol: 15000
+  sell_floor_position: 3000
+  buy_block_position: 9000
+  tplus1: true
+  allow_short: false
+fee:
+  mode: single_fill_side_specific
+  commission_rate: 5.0e-05
+  transfer_fee_rate: 1.0e-05
+  handling_fee_rate: 3.41e-05
+  regulatory_fee_rate: 2.0e-05
+  stamp_duty_rate: 0.0005
+output:
+  fill_prefix: queue_mult_0p05
